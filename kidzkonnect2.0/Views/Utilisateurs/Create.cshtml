@@ -1,0 +1,103 @@
+﻿@model kidzkonnect2._0.Models.Utilisateur
+<!-- Définition de la page -->
+@{
+    ViewData["Title"] = "Create";
+}
+
+<!-- Styles CSS -->
+<style>
+    /* Style pour le formulaire */
+    .form {
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 10px;
+        border: 3px solid #E9E8E9;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+        /* Style pour le titre du formulaire */
+        .form h2 {
+            text-align: center;
+        }
+
+    /* Style pour le conteneur des boutons */
+    .button-container {
+        display: flex;
+        justify-content: right;
+        align-items: center;
+        margin-top: 5%;
+    }
+</style>
+
+<!-- Contenu de la page -->
+<div class="form my-5">
+    <!-- Titre du formulaire -->
+    <h2>Create Account</h2>
+    <form asp-controller="Utilisateurs" asp-action="Create" class="mb-3" enctype="multipart/form-data" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <!-- Champ prenom -->
+        <div class="mb-3">            
+            <label asp-for="Prenom" class="control-label">First Name:</label>
+            <span asp-validation-for="Prenom" class="text-danger"></span>
+            <input asp-for="Prenom" class="form-control" />
+            
+        </div>
+
+        <!-- Champ nom -->
+        <div class="mb-3">
+            <label asp-for="Nom" class="control-label">Last Name:</label>
+            <span asp-validation-for="Nom" class="text-danger"></span>
+            <input asp-for="Nom" class="form-control" />
+        </div>
+
+        <!-- Champ date de naissance -->
+        <div class="mb-3">
+            <label asp-for="DateNaissance" class="control-label">Date of Birth:</label>
+            <span asp-validation-for="DateNaissance" class="text-danger"></span>
+            <input asp-for="DateNaissance" class="form-control" />
+        </div>
+
+        <!-- Champ adresse -->
+        <div class="mb-3">
+            <label asp-for="Adresse" class="control-label">Town:</label>
+            <span asp-validation-for="Adresse" class="text-danger"></span>
+            <input asp-for="Adresse" class="form-control" />
+        </div>
+
+        <!-- Champ courriel -->
+        <div class="mb-3">
+            <label asp-for="Courriel" class="control-label">Email:</label>
+            <span asp-validation-for="Courriel" class="text-danger"></span>
+            <input asp-for="Courriel" class="form-control" id="email" value="@ViewBag.Email" />
+        </div>
+
+        <!-- Champ mot de passe -->
+        <div class="mb-3">
+            <label asp-for="Password" class="control-label">Password:</label>
+            <span asp-validation-for="Password" class="text-danger"></span>
+            <input asp-for="Password" type="password" class="form-control" id="password" value="@ViewBag.Password" />
+        </div>
+
+        <!-- Champ pour choisir l'image -->
+        <div class="mb-3 form-group">
+            <label for="userPicture" class="form-label">Profile Picture (JPG, PNG only):</label>
+            <input type="file" class="form-control" id="userPicture" name="userPicture" accept=".jpg, .jpeg, .png" required>
+        </div>
+
+        <!-- Boutons d'action pour enregistrer ou revenir en arrière-->
+        <div class="form-group col-md-6 text-right">
+            <input type="submit" value="Create" class="btn btn-primary mr-3" />
+            <a asp-controller="Home" asp-action="SignInUp" class="btn btn-secondary ml-2">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

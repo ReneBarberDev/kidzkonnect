@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kidzkonnect2.0", "kidzkonnect2.0\kidzkonnect2.0.csproj", "{7227346E-2EAF-4BF8-B5F8-7E1FDD7A2842}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7227346E-2EAF-4BF8-B5F8-7E1FDD7A2842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7227346E-2EAF-4BF8-B5F8-7E1FDD7A2842}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7227346E-2EAF-4BF8-B5F8-7E1FDD7A2842}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7227346E-2EAF-4BF8-B5F8-7E1FDD7A2842}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1759736D-B023-4DF6-A4FC-B32DB1F9F872}
+	EndGlobalSection
+EndGlobal

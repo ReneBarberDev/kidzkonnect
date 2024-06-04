@@ -1,0 +1,71 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+
+.btn-primary {
+    background-color: #00B0F0;
+    border: none;
+}
+
+.btn-success {
+    background-color: #6DCA3E;
+    border: none;
+}
+
+
+.btn-danger {
+    background-color: #F42023;
+    border: none;
+}
+
+.btn-orange {
+    background-color: #F6821B;
+    color: white;
+}
+
+    .btn-orange:hover {
+        background-color: #d16b14;
+        color: white;
+    }
+
+.title {
+    background-color: #00B0F0;
+    color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.status-text {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.accepted {
+    color: mediumseagreen;
+}
+
+.rejected {
+    color: red;
+}

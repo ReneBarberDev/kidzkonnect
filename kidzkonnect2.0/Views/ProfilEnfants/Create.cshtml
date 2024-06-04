@@ -1,0 +1,110 @@
+﻿@model kidzkonnect2._0.Models.ProfilEnfant
+<!-- Définition de la page -->
+@{
+	ViewData["Title"] = "Create";
+}
+
+<!-- Styles CSS -->
+<style>
+	/* Style pour le formulaire */
+	.form {
+		border: 1px solid #ccc;
+		padding: 20px;
+		border-radius: 10px;
+		border: 3px solid #E9E8E9;
+		border-radius: 10px;
+		width: 100%;
+		max-width: 500px;
+		margin: 0 auto;
+	}
+		/* Style pour le titre du formulaire */
+		.form h2 {
+			text-align: center;
+		}
+	/* Style pour le conteneur des boutons */
+	.button-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+</style>
+
+<!-- Contenu de la page -->
+<div class="form my-5">
+	<!-- Titre du formulaire -->
+	<h3 class="title">Create Profile</h3>
+	<!-- Formulaire de création de profil -->
+	<form asp-action="Create">
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+		<!-- Recuperation de l'id de l'utilisateur pour la FK -->
+		<input type="hidden" asp-for="IdUtilisateur" value="@ViewData["UserId"]" />
+
+		<!-- Champ pour le prénom -->
+		<div class="mb-3">
+			<label asp-for="Prenom" class="form-label">First name:</label>
+			<input asp-for="Prenom" class="form-control" placeholder="Enter first name">
+			<span asp-validation-for="Prenom" class="text-danger"></span>
+		</div>
+		<!-- Champ pour le nom de famille -->
+		<div class="mb-3">
+			<label asp-for="Nom" class="form-label">Last name:</label>
+			<input asp-for="Nom" class="form-control" placeholder="Enter last name">
+			<span asp-validation-for="Nom" class="text-danger"></span>
+		</div>
+		<!-- Champ pour la date de naissance -->
+		<div class="mb-3">
+			<label asp-for="DateNaissance" class="form-label">Date of birth:</label>
+			<input asp-for="DateNaissance" class="form-control" type="date">
+			<span asp-validation-for="DateNaissance" class="text-danger"></span>
+		</div>
+		<!-- Champ pour le genre -->
+		<div class="mb-3">
+			<label asp-for="Genre" class="form-label">Gender:</label>
+			<select asp-for="Genre" class="form-control">
+				<option value="">Select Gender</option>
+				<option value="female">Female</option>
+				<option value="male">Male</option>
+				<option value="other">Other</option>
+			</select>
+			<span asp-validation-for="Genre" class="text-danger"></span>
+		</div>
+		<!-- Champ pour les centres d'intérêt -->
+		<div class="mb-3">
+			<label asp-for="Interets" class="form-label">Interests:</label>
+			<input asp-for="Interets" class="form-control" placeholder="Enter interests">
+			<span asp-validation-for="Interets" class="text-danger"></span>
+		</div>
+		<!-- Champ pour les spécifications du profil -->
+		<div class="mb-3">
+			<label asp-for="Defis" class="form-label">Specifications:</label>
+			<input asp-for="Defis" class="form-control" placeholder="Enter any challenges or restrictions">
+			<span asp-validation-for="Defis" class="text-danger"></span>
+		</div>
+		<!-- Champ pour sélectionner un avatar -->
+		<div class="mb-3">
+			<label asp-for="AvatarFk" class="form-label">Select an Avatar:</label>
+			<select asp-for="AvatarFk" class="form-control">
+				<option value="">Please select an avatar</option>
+				@foreach (var avatar in ViewBag.Avatars)
+				{
+					<option value="@avatar.Value">@avatar.Text</option>
+				}
+			</select>
+			<span asp-validation-for="AvatarFk" class="text-danger"></span>
+		</div>
+		<!-- Colonne pour les boutons de création et d'annulation -->
+		<div class="form-group col-md-6 text-right ">
+			<!-- Bouton de création du profil -->
+			<button type="submit" class="btn btn-primary">Create</button>
+			<!-- Bouton d'annulation -->
+			<button type="button" class="btn btn-secondary ml-2">Cancel</button>
+		</div>
+	</form>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

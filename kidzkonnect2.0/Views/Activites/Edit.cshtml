@@ -1,0 +1,110 @@
+﻿@model kidzkonnect2._0.Models.Activite
+<!-- Définition de la page -->
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<!-- Styles CSS -->
+<style>
+    /* Style pour le formulaire */
+    .form {
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 10px;
+        border: 3px solid #E9E8E9; /* Couleur et épaisseur de la bordure */
+        border-radius: 10px; /* Bordures arrondies */
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+        /* Style pour le titre du formulaire */
+        .form h2 {
+            text-align: center;
+        }
+
+    /* Style pour le conteneur des boutons */
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 5%;
+    }
+
+    /* Style pour les boutons à droite du conteneur */
+    .right-buttons {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+        /* Style pour le bouton "Cancel" à gauche des boutons de droite */
+        .right-buttons .btn-secondary {
+            margin-left: 10px;
+        }
+</style>
+
+<!-- Contenu de la page -->
+<div class="form my-5">
+    <!-- Titre du formulaire -->
+    <h3 class="title">Edit Activity</h3>
+    <!-- Formulaire d'édition de l'activité -->
+    <form asp-controller="Activites" asp-action="Edit" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <!-- Champ caché pour l'ID de l'activité -->
+        <input type="hidden" asp-for="IdActivite" />
+
+        <!-- Champ pour le titre de l'activité -->
+        <div class="mb-3">
+            <label asp-for="TitreActivite" class="control-label"></label>
+            <input asp-for="TitreActivite" class="form-control" />
+            <span asp-validation-for="TitreActivite" class="text-danger"></span>
+        </div>
+
+        <!-- Champ pour la description de l'activité -->
+        <div class="mb-3">
+            <label asp-for="DescriptionActivite" class="control-label"></label>
+            <input asp-for="DescriptionActivite" class="form-control" />
+            <span asp-validation-for="DescriptionActivite" class="text-danger"></span>
+        </div>
+
+        <!-- Champ pour la date de l'activité -->
+        <div class="mb-3">
+            <label asp-for="DateActivite" class="control-label"></label>
+            <input asp-for="DateActivite" class="form-control" />
+            <span asp-validation-for="DateActivite" class="text-danger"></span>
+        </div>
+
+        <!-- Champ pour l'emplacement de l'activité -->
+        <div class="mb-3">
+            <label asp-for="Emplacement" class="control-label"></label>
+            <input asp-for="Emplacement" class="form-control" />
+            <span asp-validation-for="Emplacement" class="text-danger"></span>
+        </div>
+
+        <!-- Champ pour les détails supplémentaires de l'activité -->
+        <div class="mb-3">
+            <label asp-for="DetailsAdditionnel" class="control-label"></label>
+            <input asp-for="DetailsAdditionnel" class="form-control" />
+            <span asp-validation-for="DetailsAdditionnel" class="text-danger"></span>
+        </div>
+
+        <!-- Conteneur des boutons -->
+        <div class="button-container">
+            <!-- Bouton Supprimer -->
+            <a asp-action="Delete" asp-route-id="@Model.IdActivite" class="btn btn-danger"
+               onclick=>Delete Activity</a>
+
+            <div class="right-buttons">
+                <!-- Bouton pour enregistrer les modifications -->
+                <input type="submit" value="Save Changes" class="btn btn-primary">
+                <!-- Bouton Annuler -->
+                <button type="button" class="btn btn-secondary" onclick="window.history.back();">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

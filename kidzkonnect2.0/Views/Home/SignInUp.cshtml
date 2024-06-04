@@ -1,0 +1,378 @@
+﻿@model kidzkonnect2._0.Models.LoginViewModel
+
+<!-- Définition de la page -->
+@{
+	ViewData["Title"] = "SignInUp";
+}
+<!-- Styles CSS -->
+<style>
+	/* Styles pour masquer les icônes de la barre de navigation sur la page spécifique */
+	.page-specific .nav-item {
+		display: none;
+	}
+
+	/* Masquer le formulaire de recherche sur la page Signinup */
+	.page-specific .input-container {
+		display: none;
+	}
+
+	/* Style du formulaire */
+	.sign-form {
+		max-width: 300px;
+		background: #F8F9FD;
+		background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(244, 247, 251) 100%);
+		border-radius: 40px;
+		padding: 20px 30px;
+		border: 5px solid rgb(255, 255, 255);
+		box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 30px 30px -20px;
+		margin: auto;
+	}
+
+	/* Titre du formulaire */
+	.heading {
+		text-align: center;
+		font-weight: 900;
+		font-size: 25px;
+		color: #00B0F0;
+	}
+
+	/* Styles pour les champs du formulaire */
+	.form .input {
+		width: 100%;
+		background: white;
+		border: none;
+		padding: 5px 20px;
+		border-radius: 20px;
+		margin-top: 15px;
+		box-shadow: #cff0ff 0px 10px 10px -5px;
+		border-inline: 2px solid transparent;
+	}
+
+	/* Styles pour "Mot de passe oublié" */
+	.form .forgot-password {
+		display: block;
+		margin-top: 10px;
+		margin-left: 10px;
+	}
+
+		/* Styles pour les liens "Mot de passe oublié" */
+		.form .forgot-password a {
+			font-size: 11px;
+			color: #00B0F0;
+			text-decoration: none;
+		}
+
+	/* Styles pour le bouton de connexion */
+	.form .login-button {
+		display: block;
+		width: 100%;
+		font-weight: bold;
+		background: #00B0F0;
+		color: white;
+		padding-block: 5px;
+		margin: 20px auto;
+		border-radius: 20px;
+		box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
+		border: none;
+		transition: all 0.2s ease-in-out;
+	}
+
+		.form .login-button:hover {
+			transform: scale(1.03);
+			box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
+		}
+
+		.form .login-button:active {
+			transform: scale(0.95);
+			box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
+		}
+
+	/* Styles pour les boutons des réseaux sociaux */
+	.social-account-container {
+		margin-top: 25px;
+	}
+
+		.social-account-container .connection {
+			display: block;
+			text-align: center;
+			font-size: 10px;
+			color: rgb(170, 170, 170);
+		}
+
+		.social-account-container .social-accounts {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			gap: 15px;
+			margin-top: 5px;
+		}
+
+			.social-account-container .social-accounts .social-button {
+				background: #00B0F0;
+				border: 1px solid #00B0F0;
+				padding: 5px;
+				border-radius: 50%;
+				width: 40px;
+				aspect-ratio: 1;
+				display: grid;
+				place-content: center;
+				box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 12px 10px -8px;
+				transition: all 0.2s ease-in-out;
+			}
+
+				.social-account-container .social-accounts .social-button .svg {
+					fill: white;
+					margin: auto;
+				}
+
+				.social-account-container .social-accounts .social-button:hover {
+					transform: scale(1.1);
+				}
+
+				.social-account-container .social-accounts .social-button:active {
+					transform: scale(0.9);
+				}
+
+	/* Styles pour les liens d'accord utilisateur */
+	.agreement {
+		display: block;
+		text-align: center;
+		margin-top: 15px;
+	}
+
+		.agreement a {
+			text-decoration: none;
+			color: #00B0F0;
+			font-size: 9px;
+		}
+
+	/* Styles pour la section principale */
+	.wrapper {
+		--input-focus: #00B0F0;
+		--font-color: #323232;
+		--font-color-sub: #666;
+		--bg-color: #fff;
+		--bg-color-alt: #666;
+		--main-color: #323232;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	/* Styles pour la carte de commutation */
+	.switch {
+		transform: translateY(-200px);
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 30px;
+		width: 50px;
+		height: 20px;
+	}
+
+	.card-side::before {
+		position: absolute;
+		content: 'Sign In';
+		left: -70px;
+		top: 0;
+		width: 100px;
+		text-decoration: underline;
+		color: #00B0F0;
+		font-weight: 600;
+	}
+
+	.card-side::after {
+		position: absolute;
+		content: 'Sign Up';
+		left: 70px;
+		top: 0;
+		width: 100px;
+		text-decoration: none;
+		color: #00B0F0;
+		font-weight: 600;
+	}
+
+	/* Styles pour le commutateur */
+	.toggle {
+		opacity: 0;
+		width: 0;
+		height: 0;
+	}
+
+	/* Styles pour le slider du commutateur */
+	.slider {
+		box-sizing: border-box;
+		border-radius: 10px;
+		border: 1px solid #00B0F0;
+		box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 12px 10px -8px;
+		position: absolute;
+		cursor: pointer;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: rgb(244, 247, 251);
+		transition: 0.3s;
+	}
+
+
+		.slider:before {
+			box-sizing: border-box;
+			position: absolute;
+			content: "";
+			height: 20px;
+			width: 20px;
+			border: 1px solid #00B0F0;
+			box-shadow: #00B0F0 1px 2px 1px 0px;
+			border-radius: 10px;
+			left: -1px;
+			bottom: 1px;
+			background-color: #fff;
+			transition: 0.3s;
+		}
+
+	/* Styles pour le slider lorsque le commutateur est coché */
+	.toggle:checked + .slider {
+		background-color: var(--input-focus);
+	}
+
+		.toggle:checked + .slider:before {
+			transform: translateX(30px);
+		}
+
+	.toggle:checked ~ .card-side:before {
+		text-decoration: none;
+	}
+
+	.toggle:checked ~ .card-side:after {
+		text-decoration: underline;
+	}
+
+	/* Styles pour la carte */
+	.flip-card__inner {
+		width: 300px;
+		height: 350px;
+		position: relative;
+		background-color: transparent;
+		perspective: 1000px;
+		text-align: center;
+		transition: transform 0.8s;
+		transform-style: preserve-3d;
+	}
+
+	.toggle:checked ~ .flip-card__inner {
+		transform: rotateY(180deg);
+	}
+
+
+	.flip-card__front, .flip-card__back {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+	}
+
+	/* Styles pour la carte lorsqu'elle est retournée */
+	.flip-card__back {
+		width: 100%;
+		transform: rotateY(180deg);
+	}
+</style>
+
+<body class="page-specific">
+	<div class="container-fluid content bg-white p-5 my-5">
+		<div class="wrapper my-5 py-5">
+
+			<!-- Commutateur pour basculer entre Connexion/Inscription -->
+			<label class="switch my-5">
+				<input type="checkbox" class="toggle">
+				<span class="slider"></span>
+				<span class="card-side"></span>
+				<div class="flip-card__inner">
+
+					<!-- Section de Connexion -->
+					<div class="sign-form flip-card__front">
+						<div class="heading">Sign In</div>
+						
+						<!-- Mettez à jour l'attribut action du formulaire pour correspondre à votre route d'action de connexion -->
+						<form asp-controller="Utilisateurs" asp-action="Login" method="post" class="form">
+							<input asp-for="Courriel" class="input" type="email" placeholder="E-mail">
+							<input asp-for="Password" class="input" type="password" placeholder="Password">
+							<span asp-validation-for="Courriel" class="text-danger"></span>
+							<span asp-validation-for="Password" class="text-danger"></span>
+							<button class="login-button" type="submit">Sign In</button>
+							<div asp-validation-summary="All" class="text-danger"></div>
+						</form>
+
+
+						<!-- Connexion via réseaux sociaux -->
+						<div class="social-account-container">
+							<span class="connection">Or Sign in with</span>
+							<div class="social-accounts">
+
+								<!-- Boutons des réseaux sociaux -->
+								<button class="social-button google">
+									<svg class="svg" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 488 512">
+										<path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path>
+									</svg>
+								</button>
+								<button class="social-button facebook text-white">
+									<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" height=" 1.25em">
+										<path fill="#fff" d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131c.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+									</svg>
+								</button>
+								<button class="social-button apple">
+									<svg class="svg" xmlns="http://www.w3.org/2000/svg" height="1.3em" viewBox="0 0 384 512">
+										<path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path>
+									</svg>
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- Section d'Inscription -->
+					<div class="sign-form flip-card__back">
+						<div class="heading">Sign Up</div>
+
+						<form asp-controller="Utilisateurs" asp-action="Create" class="form">
+							<input class="input" type="email" name="email" id="email" placeholder="E-mail">
+							<input class="input" type="password" name="password" id="password" placeholder="Password">
+							<input class="login-button" type="submit" value="Sign Up">
+						</form>
+
+						<!-- Inscription via réseaux sociaux -->
+						<div class="social-account-container">
+							<span class="connection">Or Sign up with</span>
+							<div class="social-accounts">
+
+								<!-- Boutons des réseaux sociaux -->
+								<button class="social-button google">
+									<svg class="svg" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 488 512">
+										<path d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path>
+									</svg>
+								</button>
+								<button class="social-button facebook text-white">
+									<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" height=" 1.25em">
+										<path fill="#fff" d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131c.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+									</svg>
+								</button>
+								<button class="social-button apple">
+									<svg class="svg" xmlns="http://www.w3.org/2000/svg" height="1.3em" viewBox="0 0 384 512">
+										<path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path>
+									</svg>
+								</button>
+							</div>
+						</div>
+						<span class="agreement"><a href="#">Learn user licence agreement</a></span>
+					</div>
+				</div>
+			</label>
+		</div>
+	</div>
+</body>
+
+

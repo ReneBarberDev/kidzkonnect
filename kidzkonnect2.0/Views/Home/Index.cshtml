@@ -1,0 +1,80 @@
+﻿<!-- Définition de la page -->
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!-- Styles CSS -->
+<style>
+    /* Styles pour les cartes */
+    .card {
+        border: none; /* Supprime la bordure par défaut des cartes */
+    }
+
+        /* Styles au survol des cartes */
+        .card:hover {
+            opacity: 0.5; /* Réduit l'opacité au survol des cartes */
+            transform: scale(1.05); /* Augmente légèrement la taille au survol des cartes */
+        }
+
+    /* Styles pour le titre au centre des cartes */
+    .card-title {
+        position: absolute; /* Position absolue pour centrer le titre */
+        top: 50%; /* Position verticale au centre */
+        left: 50%; /* Position horizontale au centre */
+        transform: translate(-50%, -50%); /* Centrage précis avec transform */
+        color: white; /* Couleur du texte en blanc */
+        text-shadow: 2px 2px 2px rgba(0, 0, 0, 1);
+    }
+</style>
+
+<!-- Contenu de la page -->
+<div class="container text-center mb-5">
+
+    <!-- Row pour les cartes -->
+    <div class="row">
+        <!-- Première carte -->
+        <div class="col-md-4">
+            <div class="card">
+                <!-- Lien vers la page FriendsActivities -->
+                <a asp-controller="Activites" asp-action="FriendsActivities">
+                    <div class="card-body">
+                        <!-- Titre de la carte -->
+                        <h4 class="card-title">Friends Activities</h4>
+                    </div>
+                    <!-- Image de la carte -->
+                    <img class="img-fluid mt-3" src="/images/ongletfriendsactivities.jpg" alt="Friend's Activities" />
+                </a>
+            </div>
+        </div>
+
+        <!-- Deuxième carte -->
+        <div class="col-md-4">
+            <div class="card">
+                <!-- Lien vers la page FriendsSuggestions -->
+                <a asp-controller="ProfilEnfants" asp-action="FriendsSuggestions">
+                    <div class="card-body">
+                        <!-- Titre de la carte -->
+                        <h4 class="card-title">Friends Suggestions</h4>
+                    </div>
+                    <!-- Image de la carte -->
+                    <img class="img-fluid mt-3" src="/images/ongletfriendssuggestions.jpg" alt="Friends Suggestions" />
+                </a>
+            </div>
+        </div>
+
+        <!-- Troisième carte -->
+        <div class="col-md-4">
+            <div class="card">
+                <!-- Lien vers la page CreateActivity -->
+                <a asp-controller="Activites" asp-action="Create">
+                    <div class="card-body">
+                        <!-- Titre de la carte -->
+                        <h4 class="card-title">Create a new activity</h4>
+                    </div>
+                    <!-- Image de la carte -->
+                    <img class="img-fluid mt-3" src="/images/ongletactivity.jpg" alt="Create a new activity" />
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

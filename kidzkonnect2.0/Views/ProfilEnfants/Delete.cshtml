@@ -1,0 +1,48 @@
+﻿@model kidzkonnect2._0.Models.ProfilEnfant
+<!-- Définition de la page -->
+@{
+    ViewData["Title"] = "Delete"; 
+}
+
+<!-- Styles CSS -->
+<style>
+    .centered-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 400px;
+        padding-top: 100px;
+    }
+
+    .confirmation-box {
+        width: 100%;
+        max-width: 400px;
+        padding: 20px;
+        background: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+</style>
+
+<!-- Conteneur pour la boîte de confirmation de suppression -->
+<div class="centered-container">
+    <!-- Boîte de confirmation de suppression -->
+    <div class="confirmation-box">
+        <h2>Confirm deletion?</h2> 
+        <h4>This action is irreversible.</h4>
+        <!-- Détails du profil à supprimer -->
+        <div class="profile-details">
+            <!-- Affiche le prénom et le nom du profil concerné par la suppression -->
+            <p>@Model.Prenom @Model.Nom</p>
+        </div>
+        <!-- Formulaire pour la soumission de la suppression -->
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="IdProfil" /> 
+            <!-- Bouton pour valider la suppression -->
+            <button type="submit" class="btn btn-danger">Delete</button> 
+            <!-- Bouton pour annuler et revenir à la page précédente -->
+            <a href="@Url.Action("Index")" class="btn btn-primary">Go back</a> 
+        </form>
+    </div>
+</div>

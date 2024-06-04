@@ -1,0 +1,113 @@
+﻿@model List<FriendsSuggestionsViewModel>
+
+<!-- Styles CSS -->
+<style>
+    /* Styles additionnels pour le conteneur flex */
+    .activities-flex-container {
+        display: flex;
+        justify-content: space-around; /* Alignement des éléments sur l'axe principal */
+        flex-wrap: wrap; /* Permettre le retour à la ligne des éléments */
+    }
+
+    .activity-box {
+        flex-basis: 120%; /* Augmentez cette valeur pour augmenter la largeur des boîtes */
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        border-radius: 10px; /* Bordure arrondie */
+        width: 100%;
+        background-color: #E9E8E9;
+    }
+
+        .activity-box:hover {
+            box-shadow: 0 12px 20px 0 rgba(0,0,0,0.4); /* Effet de hover accentué */
+            transform: translateY(-5px); /* Décalage vers le haut */
+        }
+
+    /* Ajuster la taille de l'image pour la disposition en trois colonnes */
+    .img-fixed-height {
+        height: 200px; /* Ajuster la hauteur selon les besoins */
+        object-fit: cover;
+        width: 100%; /* Assurer que l'image couvre toute la largeur */
+        border-top-left-radius: 10px; /* Arrondir le coin supérieur gauche */
+        border-top-right-radius: 10px; /* Arrondir le coin supérieur droit */
+    }
+</style>
+
+<!-- Titre de la page -->
+<h3 class="title">Friends Suggestions</h3>
+
+<!-- Informations des enfants -->
+@if (Model.Any())
+{
+    <div class="row">
+        @foreach (var profile in Model)
+        {
+            <div class="col-md-4 activities-flex-container">
+                <div class="card activity-box">
+                    <div class="card-body mx-auto text-center">
+                        <img class="card-img-top img-fixed-height" src="/images/hello.jpg" alt="Wanna be friends?">
+                        <h5 class="card-title mt-4">@profile.FirstName @profile.LastName</h5>
+                        <h6>Common Interests:</h6>
+                        <ul class ="list-unstyled">
+                            @foreach (var interest in profile.CommonInterests)
+                            {
+                                <li>@interest</li>
+                            }
+                        </ul>
+                        <h6>Common Challenges:</h6>
+                        <ul class="list-unstyled">
+                            @foreach (var challenge in profile.CommonChallenges)
+                            {
+                                <li>@challenge</li>
+                            }
+                        </ul>
+                        <div class="btn-group" role="group" aria-label="Profile Actions">
+                            <a asp-controller="ProfilEnfants" asp-action="UserDetailsFromChildProfile" asp-route-idProfil="@profile.IdProfil" class="btn btn-primary">Details</a>
+                            @if (profile.IsRequestPending)
+                            {
+                                <button class="btn btn-secondary disabled w-100">Pending</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-success w-100" data-toggle="modal" data-target="#konnectModal-@profile.IdProfil">Konnect</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Konnect Modal -->
+            <div class="modal fade" id="konnectModal-@profile.IdProfil" tabindex="-1" role="dialog" aria-labelledby="konnectModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="konnectModalLabel">Send Friend Request</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form asp-controller="ProfilEnfants" asp-action="SendFriendRequest" method="post">
+                            <div class="modal-body">
+                                <input type="hidden" name="receiverId" value="@profile.IdProfil" />
+                                <div class="select-wrapper">
+                                    <select name="senderId" asp-items="ViewBag.ProfilEnfantList" class="form-control">
+                                    </select>
+                                    <span class="arrow">&#9660;</span>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Send Request</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+}
+else
+{
+    <h5 class="text-center my-5">No friends suggestions found.</h5>
+}

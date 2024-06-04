@@ -1,0 +1,214 @@
+﻿@model kidzkonnect2._0.Models.Activite
+<!-- Définition de la page -->
+@{
+    ViewData["Title"] = "Details";
+}
+
+<!-- Styles CSS -->
+<style>
+    /* Style pour les images avec hauteur fixe */
+    .img-fixed-height {
+        height: 400px;
+        object-fit: cover;
+    }
+
+    /* Style pour le bouton de rejoindre l'activité */
+    .btn-join {
+        background: linear-gradient(-45deg, #6DCA3E 0%, #00B0F0 100% );
+        color: white;
+        border: 2px solid #6DCA3E;
+    }
+
+        /* Style pour le survol du bouton de rejoindre l'activité */
+        .btn-join:hover {
+            background-color: white;
+            color: black;
+        }
+
+    /* Style des colonnes de gauche et droite */
+    .colonne1 {
+        background-color: #6DCA3E;
+        color: white;
+    }
+
+    .colonne2 {
+        background-color: #00B0F0;
+        color: white;
+    }
+
+    /* Style pour les cartes */
+    .card {
+        width: 100%;
+        border: 3px solid #E9E8E9; /* Couleur et épaisseur de la bordure */
+        border-radius: 10px; /* Bordures arrondies */
+        margin-bottom: 20px; /* Marge en bas pour l'espace entre les cartes */
+    }
+
+    .card1 {
+        position: relative;
+        width: 490px;
+        height: 400px;
+        background: linear-gradient(-45deg, #6DCA3E 0%, #00B0F0 100% );
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+    }
+
+        .card1 svg {
+            width: 48px;
+            fill: #333;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+
+        .card1:hover {
+            transform: rotate(-5deg) scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+    .card__content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-45deg);
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        background: linear-gradient(-45deg, #6DCA3E 0%, #00B0F0 100% );
+        opacity: 0;
+        transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+    }
+
+    .card1:hover .card__content {
+        transform: translate(-50%, -50%) rotate(0deg);
+        opacity: 1;
+    }
+
+    .card__title {
+        color: white;
+        margin: 0;
+        font-size: 24px;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    .card__description {
+        margin: 10px 0 0;
+        font-size: 14px;
+        color: white;
+        line-height: 1.4;
+    }
+
+    .card1:hover svg {
+        scale: 0;
+        transform: rotate(-45deg);
+    }
+</style>
+
+<!-- Contenu de la page -->
+<div class="container text-center my-5">
+
+    <!-- Titre de la page -->
+    <h3 class="title">Activity's details</h3>
+
+    <!-- Section en grille avec 3 colonnes -->
+    <div class="row">
+        <!-- Colonne pour les informations de l'activité -->
+        <div class="col-md-3 d-flex">
+            <div class="card flex-column colonne1">
+                <div class="card-body text-center">
+                    <!-- Titre de l'activité -->
+                    <h5 class="card-title">Title</h5>
+                    <p class="card-text">@Html.DisplayFor(model => model.TitreActivite)</p>
+                    <!-- Lieu de l'activité -->
+                    <h5 class="card-title pt-4">Location</h5>
+                    <p class="card-text">@Html.DisplayFor(model => model.Emplacement)</p>
+                    <!-- Date/Heure de l'activité -->
+                    <h5 class="card-title pt-4">Date/Time</h5>
+                    <p class="card-text pb-4">@Html.DisplayFor(model => model.DateActivite)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Colonne pour l'image et la description de l'activité -->
+        <div class="col-md-6 d-flex">
+            <div class="card flex-column">
+                <!-- Image de l'activité -->
+                <div class="card-body text-center my-5">
+                    <div class="card1">
+                        <img class="card-img-top img-fixed-height" src="/images/activity2.jpg" alt="Game Night">
+                        <div class="card__content">
+                            <p class="card__title mb-3">Description</p>
+                            <p class="card__description">@Html.DisplayFor(model => model.DescriptionActivite)</p>
+                            <p class="card__title mb-3">Additionnal details:</p>
+                            <p class="card__description">@Html.DisplayFor(model => model.DetailsAdditionnel)</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Bouton pour rejoindre l'activité -->
+                <a href="#joinActivityModal-@Model.IdActivite" role="button" class="btn btn-join mt-2" data-toggle="modal">Join Activity</a>
+            </div>
+        </div>
+
+        <!-- Colonne pour la liste des participants -->
+        <div class="col-md-3 d-flex">
+            <div class="card flex-column">
+                <div class="card-body colonne2">
+                    <!-- Titre des participants -->
+                    <h5 class="card-title">Attendees</h5>
+                    <!-- Liste des participants (à remplacer par une boucle foreach) -->
+                    <p class="card-text">John Smith</p>
+                    <p class="card-text">Jackie Wright</p>
+                    <p class="card-text">Julia Wong</p>
+                    <p class="card-text">Arthur Lelievre</p>
+                    <p class="card-text">Paul William</p>
+                    <p class="card-text">Charlotte Meunier</p>
+                    <p class="card-text">Pedro Sanchez</p>
+                    <p class="card-text">Maria Recine</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Join Activity Modal -->
+<!-- The modal allows the utilisateur to select which profilEnfant to join the activity -->
+<div class="modal fade" id="joinActivityModal-@Model.IdActivite" tabindex="-1" role="dialog" aria-labelledby="joinActivityModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="joinActivityModalLabel">Join Activity</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-controller="Activities" asp-action="JoinActivity" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="idActivite" value="@Model.IdActivite" />
+                    <div class="select-wrapper">
+                        <select name="profilEnfantId" asp-items="ViewBag.ProfilEnfantList" class="form-control">
+                            <!-- The options are dynamically generated from ViewBag.ProfilEnfantList -->
+                        </select>
+                        <span class="arrow">&#9660;</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Join Activity</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Scripts necessary for the modal, like Bootstrap's JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Render partial for validation scripts if you have form validation -->
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

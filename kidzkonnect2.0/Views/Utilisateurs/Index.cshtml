@@ -1,0 +1,265 @@
+﻿@model IEnumerable<kidzkonnect2._0.Models.Utilisateur>
+<!-- Définition de la page -->
+@{
+	ViewData["Title"] = "Index";
+}
+
+<!-- Styles CSS -->
+<style>
+	/* Styles pour les images avec hauteur fixe */
+	.img-fixed-height {
+		height: 250px;
+		object-fit: cover;
+	}
+
+	/* Styles pour le bouton 'details' et 'add profile' */
+	.btn-details {
+		background-color: #FD58BD;
+		color: white;
+		border: 2px solid #FD58BD;
+	}
+
+		.btn-details:hover {
+			background-color: white;
+			color: black;
+		}
+
+	/* Styles pour le bouton 'edit' */
+	.btn-edit {
+		background-color: #F6821B;
+		color: white;
+		border: 2px solid #F6821B;
+	}
+
+		.btn-edit:hover {
+			background-color: white;
+			color: black;
+		}
+
+	/* Style pour l'overlay */
+	.overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		max-height: 250px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
+		color: white;
+		font-size: 18px;
+		opacity: 0; /* Initialement invisible */
+		transition: opacity 0.3s ease; /* Animation de transition */
+	}
+
+	/* Style pour afficher l'overlay au survol */
+	.image-container:hover .overlay {
+		opacity: 0.4;
+	}
+
+	/* Style pour les cartes avec bordures */
+	.card {
+		border: 3px solid #E9E8E9;
+		border-radius: 10px;
+		margin-bottom: 20px;
+	}
+
+	.card-text {
+		color: black;
+	}
+
+	/* Style pour la colomne compte, pris sur le site:https://uiverse.io/Codewithvinay/afraid-dodo-14 */
+	.box {
+		position: relative;
+		width: 300px;
+		height: 400px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transition: 0.5s;
+		z-index: 1;
+	}
+
+		.box::before {
+			content: ' ';
+			position: absolute;
+			top: 0;
+			left: 50px;
+			width: 50%;
+			height: 100%;
+			text-decoration: none;
+			background: #fff;
+			border-radius: 8px;
+			transform: skewX(15deg);
+			transition: 0.5s;
+		}
+
+		.box::after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 50;
+			width: 50%;
+			height: 100%;
+			background: #fff;
+			border-radius: 8px;
+			transform: skewX(15deg);
+			transition: 0.5s;
+			filter: blur(30px);
+		}
+
+		.box:hover:before,
+		.box:hover:after {
+			transform: skewX(0deg) scaleX(1.3);
+		}
+
+		.box:before,
+		.box:after {
+			background: linear-gradient(315deg, #F6821B, #FD58BD)
+		}
+
+		.box span {
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			z-index: 5;
+			pointer-events: none;
+		}
+
+			.box span::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 0;
+				height: 0;
+				border-radius: 8px;
+				background: rgba(255, 255, 255, 0.1);
+				backdrop-filter: blur(10px);
+				opacity: 0;
+				transition: 0.1s;
+				animation: animate 2s ease-in-out infinite;
+				box-shadow: 0 5px 15px rgba(0,0,0,0.08)
+			}
+
+			.box span::before {
+				top: -40px;
+				left: 40px;
+				width: 50px;
+				height: 50px;
+				opacity: 1;
+			}
+
+			.box span::after {
+				content: '';
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				width: 100%;
+				height: 100%;
+				border-radius: 8px;
+				background: rgba(255, 255, 255, 0.1);
+				backdrop-filter: blur(10px);
+				opacity: 0;
+				transition: 0.5s;
+				box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+				animation-delay: -1s;
+			}
+
+			.box span:after {
+				bottom: -40px;
+				right: 40px;
+				width: 50px;
+				height: 50px;
+				opacity: 1;
+			}
+
+		.box .content {
+			position: absolute; /* Change la position en absolue */
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%); /* Centre la boîte */
+			width: 270px; /* Ajuste la largeur selon tes besoins */
+			height: 354px; /* Ajuste la hauteur selon tes besoins */
+			padding: 20px 15px; /* Ajuste le rembourrage selon tes besoins */
+			background: rgba(255, 255, 255, 0.05);
+			backdrop-filter: blur(10px);
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+			border-radius: 8px;
+			z-index: 1;
+			transform: 0.5s;
+			color: #fff;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+			.box .content h2 {
+				font-size: 20px;
+				color: #fff;
+				margin-bottom: 10px;
+			}
+
+	.first-column {
+		display: flex;
+		flex-direction: column;
+		align-items: center; /* Centre verticalement le contenu dans la colonne */
+	}
+
+	/* couleur des colonnes */
+	.colonne1 {
+		background-color: #E9E8E9;
+	}
+
+</style>
+
+<!-- Contenu de la page -->
+<div class="container text-center my-5">
+
+	<!-- Titre de la page -->
+	<h3 class="title">Account</h3>
+
+	<div class="row">
+		<!-- Boucle pour afficher chaque utilisateur -->
+		@foreach (var item in Model)
+		{
+			<div class="col-md-4 d-flex align-items-center">
+				<!-- Conteneur pour l'image utilisateur -->
+				<div class="flex-column">
+					<!-- Affichage de l'image utilisateur -->
+					@if (!string.IsNullOrEmpty(item.UserPicture))
+					{
+						<img class="card-img-top img-fixed-height mb-3" src="@item.UserPicture" alt="User Picture">
+					}
+					else
+					{
+						<span>No Image Available</span>
+					}
+				</div>
+				<!-- Conteneur pour les détails utilisateur -->
+				<div class="box mr-3">
+					<span></span>
+					<div class="content">
+						<div class="flex-column">
+							<div class="card-body">
+								<!-- Affichage des détails utilisateur -->
+								<p class="card-text">Name: @Html.DisplayFor(modelItem => item.Prenom)</p>
+								<p class="card-text">Last name: @Html.DisplayFor(modelItem => item.Nom)</p>
+								<p class="card-text">Date of birth: @Html.DisplayFor(modelItem => item.DateNaissance)</p>
+								<p class="card-text">Email: @Html.DisplayFor(modelItem => item.Courriel)</p>
+								<p class="card-text">Address: @Html.DisplayFor(modelItem => item.Adresse)</p>
+							</div>
+							<!-- Bouton pour chaque utilisateur -->
+							<a href="@Url.Action("Index", "ProfilEnfants", new { userId = item.IdUtilisateur })" class="btn btn-edit">Choisir Utilisateur</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>
+

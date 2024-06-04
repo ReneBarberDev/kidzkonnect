@@ -1,0 +1,132 @@
+﻿@model IEnumerable<kidzkonnect2._0.Models.NotificationViewModel>
+
+<h3 class="title">Notifications</h3>
+<div class="container">
+    @if (!Model.Any())
+    {
+        <h5 class="text-center my-5">No notifications found.</h5>
+    }
+    else
+    {
+        foreach (var viewModel in Model)
+        {
+            var notification = viewModel.Notification;
+            var status = viewModel.Status ?? "unanswered";
+            DateTime dateEnvoi = notification.DateEnvoi ?? DateTime.MinValue;
+
+            <div id="notification-@notification.IdNotification" class="row border rounded mb-3 p-3 w-75 mx-auto notification-item">
+                <div class="col-md-10">
+                    @{
+                        var message = notification.Message;
+                        var displayMessage = message.Contains("[Participation]") ? message.Substring(message.IndexOf("[Participation]") + "[Participation]".Length).Trim() : message;
+                    }
+                    <h5 class="notification-message">@Html.Raw(displayMessage)</h5>
+                </div>
+
+                <div class="col-md-2 text-center">
+                    @if (notification.Message.Contains("is attending"))
+                    {
+                    }
+                    else
+                    {
+                        <div class="status-area">
+                            @if (status == "accepted")
+                            {
+                                <p class="status-text text-success">Accepted</p>
+                            }
+                            else if (status == "rejected")
+                            {
+                                <p class="status-text text-danger">Rejected</p>
+                            }
+                            else
+                            {
+                                <button onclick="changeStatus('@notification.IdNotification', true)" class="bg-white border-0 ml-2">
+                                    <svg width="22" height="22" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill="#6DCA3E" d="M56.734 5.081c-8.437 7.302-15.575 14.253-22.11 23.322c-2.882 4-6.087 8.708-8.182 13.153c-1.196 2.357-3.352 6.04-4.087 9.581c-4.02-3.74-8.338-7.985-12.756-11.31c-3.149-2.369-12.219 2.461-8.527 5.239c6.617 4.977 12.12 11.176 18.556 16.375c2.692 2.172 8.658-2.545 10.06-4.524c-4.602-6.52 5.231-14.49 8.585-21.602c5.121-10.877 14.203-19.812 23.17-27.571c5.941-5.541-.195-6.563-4.7-2.663" />
+                                    </svg>
+                                </button>
+                                <button onclick="changeStatus('@notification.IdNotification', false)" class="bg-white border-0 ml-2">
+                                    <svg width="20" height="20" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill="#F42023" d="M60.17 59.08c.583-.914 5.309-7.652 2.737-8.667c-4.165-.074-8.232.168-12.06-1.85c-5.05-2.658-8.802-6.286-12.555-10.556c-1.013-1.15-.992-2.608 0-3.763c5.992-7.433 13.12-12.684 20.618-19.06c3.377-3-2.249-8.252-6.375-8.628c-1.875 0-3.749 1.125-5.627 1.875c-6.75 4.126-10.876 10.503-16.05 16.02c-.579.704-1.404.894-2.194.745c-.791-.147-1.547-.633-1.985-1.282c-2.889-4.291-5.52-8.872-7.33-13.735c-.969-2.597-1.876-5.228-2.528-7.926c-.968-4.04-2.436-1.84-4.122.337c-4.608 5.946-6.357 10.508-2.31 17.56c2.981 5.196 6.189 10.162 9.871 14.888c.686.882 1.172 2.188.415 3.224c-1.668 2.285-3.724 5.142-6.112 7.759a36.927 36.927 0 0 1-2.499 2.506C8.648 52.314 1.522 51.939 .396 55.316c-1.498 3 3.751 8.248 8.805 8.429a10.678 10.678 0 0 0 2.731-.593c6.23-2.196 11.394-9.664 15.04-14.417c.982-1.283 2.91-1.938 4.177-.539c4.811 5.309 10.385 12.541 17.618 14.557c4.628 1.289 8.688 .598 11.398-3.676" />
+                                    </svg>
+                                </button>
+                            }
+                        </div>
+                    }
+                </div>
+                <div class="col-md-12">
+                    <p class="text-md-right text-muted">Received: @dateEnvoi.ToString("yyyy-MM-dd")</p>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function changeStatus(notificationId, isAccepted) {
+        var actionUrl = isAccepted ? '/ProfilEnfants/AcceptFriendRequest' : '/ProfilEnfants/RejectFriendRequest';
+        var statusText = isAccepted ? 'Accepted' : 'Rejected';
+        var statusClass = isAccepted ? 'text-success' : 'text-danger';
+
+        $.ajax({
+            url: actionUrl,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                notificationId: notificationId,
+                __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+            },
+            success: function (response) {
+                if (response.success) {
+                    var notificationDiv = $('#notification-' + notificationId);
+                    var statusAreaDiv = notificationDiv.find('.status-area');
+                    notificationDiv.find('button').remove();
+                    statusAreaDiv.find('.status-text').remove();
+                    statusAreaDiv.append('<p class="status-text ' + statusClass + '">' + statusText + '</p>');
+                } else {
+                    alert(response.error);
+                }
+            },
+        });
+    }
+</script>
+
+<style>
+    .notification-item {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .status-area {
+        float: right;
+        clear: both;
+    }
+
+    .notification-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+    .status-text {
+        padding: 4px 8px;
+        display: inline-block;
+        margin: 0;
+    }
+
+    .text-success {
+        color: #28a745;
+    }
+
+    .text-danger {
+        color: #dc3545;
+    }
+
+    .notification-message {
+        color: darkorange;
+        font-weight: bold;
+    }
+
+</style>

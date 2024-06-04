@@ -1,0 +1,66 @@
+﻿@model kidzkonnect2._0.Models.UtilisateurEtActivites
+<!-- Définition de la page -->
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!-- Styles CSS -->
+<style>
+    /* Styles additionnels pour le conteneur flex */
+    .activities-flex-container {
+        display: flex;
+        justify-content: space-around; /* Alignement des éléments sur l'axe principal */
+        flex-wrap: wrap; /* Permettre le retour à la ligne des éléments */
+    }
+
+    .activity-box {
+        flex-basis: 30%; /* Largeur de chaque boîte, ajuster selon les besoins */
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        border-radius: 10px; /* Bordure arrondie */
+        margin: 10px;
+        background-color: #E9E8E9;
+    }
+
+        .activity-box:hover {
+            box-shadow: 0 12px 20px 0 rgba(0,0,0,0.4); /* Effet de hover accentué */
+            transform: translateY(-5px); /* Décalage vers le haut */
+        }
+
+    /* Ajuster la taille de l'image pour la disposition en trois colonnes */
+    .img-fixed-height {
+        height: 200px; /* Ajuster la hauteur selon les besoins */
+        object-fit: cover;
+        width: 100%; /* Assurer que l'image couvre toute la largeur */
+        border-top-left-radius: 10px; /* Arrondir le coin supérieur gauche */
+        border-top-right-radius: 10px; /* Arrondir le coin supérieur droit */
+    }
+</style>
+
+<!-- Contenu de la page -->
+<div class="container text-center my-5">
+    <!-- Titre de la page -->
+    <h3 class="title">Mes activités</h3>
+
+    <!-- Informations sur les activités -->
+    <div class="activities-flex-container">
+        @for (int i = 0; i < Math.Min(Model.Activites.Count, 3); i++)
+        {
+            var item = Model.Activites[i];
+            <div class="activity-box">
+                <img class="card-img-top img-fixed-height" src="/images/activity4.jpg" alt="@item.TitreActivite">
+                <div class="card-body">
+                    <h5 class="card-title">@item.TitreActivite</h5>
+                    <p class="card-text">Description : @item.DescriptionActivite</p>
+                    <p class="card-text">Emplacement : @item.Emplacement</p>
+                    <p class="card-text">Date/Heure : @(item.DateActivite.HasValue ? item.DateActivite.Value.ToString("dd/MM/yyyy HH:mm") : "N/A")</p>
+                    <!-- Boutons 'Détails' et 'Modifier' -->
+                    <div class="d-flex justify-content-around mt-3 mb-3">
+                        <a asp-action="Details" asp-route-id="@item.IdActivite" class="btn btn-primary ml-3 mr-3 w-100">Détails</a>
+                        <a asp-action="Edit" asp-route-id="@item.IdActivite" class="btn btn-orange ml-3 mr-3 w-100">Modifier</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

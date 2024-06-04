@@ -1,0 +1,70 @@
+﻿@model kidzkonnect2._0.Models.Utilisateur
+<!-- Définition de la page -->
+@{
+    ViewData["Title"] = "Details";
+}
+
+<!-- Titre de la page-->
+<h1>Details</h1>
+
+<div>
+    <!-- Affichage des détails de l'utilisateur -->
+    <h4>Utilisateur</h4>
+    <hr />
+    <dl class="row">
+        <!-- Affichage du nom -->
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nom)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nom)
+        </dd>
+        <!-- Affichage du prénom -->
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Prenom)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Prenom)
+        </dd>
+        <!-- Affichage de la date de naissance -->
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateNaissance)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateNaissance)
+        </dd>
+        <!-- Affichage de l'adresse -->
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Adresse)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Adresse)
+        </dd>
+        <!-- Affichage de l'adresse e-mail -->
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Courriel)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Courriel)
+        </dd>
+        <!-- Affichage du mot de passe -->
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+        <!-- Affichage de l'état de connexion -->
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EtatConnexion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EtatConnexion)
+        </dd>
+    </dl>
+</div>
+<div>
+    <!-- Liens pour éditer les détails de l'utilisateur ou revenir à la liste -->
+    <a asp-action="Edit" asp-route-id="@Model?.IdUtilisateur">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
